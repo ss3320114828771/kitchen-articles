@@ -70,10 +70,11 @@ export async function OPTIONS() {
 // GET - Get single product by ID
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  // ✅ FIXED: Promise type
 ) {
   try {
-    const productId = params.id
+    const { id } = await params  // ✅ FIXED: Await params
+    const productId = id
     
     // Find product
     const product = products.find(p => p.id === productId)
@@ -109,10 +110,12 @@ export async function GET(
 // PUT - Update product
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  // ✅ FIXED: Promise type
 ) {
   try {
-    const productId = params.id
+    const { id } = await params  // ✅ FIXED: Await params
+    const productId = id
+    
     const body = await req.json()
     const { name, price, description, category, stock, image } = body
     
@@ -175,10 +178,11 @@ export async function PUT(
 // DELETE - Delete product
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  // ✅ FIXED: Promise type
 ) {
   try {
-    const productId = params.id
+    const { id } = await params  // ✅ FIXED: Await params
+    const productId = id
     
     // Find product index
     const index = products.findIndex(p => p.id === productId)
@@ -217,10 +221,12 @@ export async function DELETE(
 // PATCH - Partially update product
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  // ✅ FIXED: Promise type
 ) {
   try {
-    const productId = params.id
+    const { id } = await params  // ✅ FIXED: Await params
+    const productId = id
+    
     const body = await req.json()
     
     // Find product index
