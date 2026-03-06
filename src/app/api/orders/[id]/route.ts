@@ -189,10 +189,12 @@ export async function OPTIONS() {
 // GET - Get single order by ID
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const orderId = params.id
+    // Await the params Promise to get the actual params object
+    const { id } = await params
+    const orderId = id
     
     // Get auth token from cookies
     const cookieHeader = req.headers.get('cookie') || ''
@@ -248,10 +250,13 @@ export async function GET(
 // PUT - Update order
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const orderId = params.id
+    // Await the params Promise
+    const { id } = await params
+    const orderId = id
+    
     const body = await req.json()
     
     // Get auth token from cookies
@@ -367,10 +372,12 @@ export async function PUT(
 // DELETE - Cancel/Delete order
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const orderId = params.id
+    // Await the params Promise
+    const { id } = await params
+    const orderId = id
     
     // Get auth token from cookies
     const cookieHeader = req.headers.get('cookie') || ''
@@ -470,10 +477,13 @@ export async function DELETE(
 // PATCH - Partial update (for status changes)
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const orderId = params.id
+    // Await the params Promise
+    const { id } = await params
+    const orderId = id
+    
     const body = await req.json()
     
     // Get auth token from cookies
